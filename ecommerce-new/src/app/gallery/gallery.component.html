@@ -1,0 +1,49 @@
+<div class="container">
+
+  <!-- Form Container -->
+  <div class="form-container">
+    <form (ngSubmit)="uploadProduct()" #productForm="ngForm">
+      <div class="form-group">
+        <label for="image">Product Image:</label>
+        <input type="file" id="image" (change)="onFileSelected($event)" accept="image/png, image/jpeg, image/jpg"
+          required>
+      </div>
+      <div class="form-group">
+        <label for="name">Product Name:</label>
+        <input type="text" id="name" [(ngModel)]="productName" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" id="price" [(ngModel)]="productPrice" name="price" step="0.01" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" [(ngModel)]="productDescription" name="description" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="upload-button">Upload Product</button>
+    </form>
+  </div>
+
+  <!-- Product List Container -->
+  <div class="product-list-container">
+    <div *ngIf="products.length > 0">
+      <div class="header">
+        <h3>Product List</h3>
+        <button type="button" class="logout-button" (click)="logout()">Logout</button>
+      </div>
+      <div class="product-grid">
+        <div *ngFor="let product of products" class="product-card">
+          <img [src]="'http://localhost/ecommerce-api/uploads/' + product.file_name" class="product-image"
+            alt="{{ product.file_name }}">
+          <p><strong>Name:</strong> {{ product.name }}</p>
+          <p><strong>Price:</strong> {{ product.price | currency :'PHP' }}</p>
+          <p><strong>Description:</strong> {{ product.description }}</p>
+          <button class="remove-button" (click)="removeProduct(product.id)">Remove</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="products.length === 0">
+      <p>No products available.</p>
+    </div>
+  </div>
+</div>

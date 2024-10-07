@@ -1,0 +1,77 @@
+<!-- Fixed Navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <div class="navbar-item navbar-title">Product Store</div>
+    <div class="navbar-item">
+      <button type="button" (click)="viewCart()" class="cart-button">
+        <i class="fas fa-shopping-cart"></i> Shopping Cart ({{ cartCount }})
+      </button>
+      <button type="button" (click)="logout()" class="logout-button">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content">
+
+  <!-- To fetch all products -->
+  <div *ngIf="products.length > 0">
+    <div class="product-grid">
+      <div *ngFor="let product of products" class="product-card">
+        <!-- Ensure the image URL is correct -->
+        <img class="product-image" [src]="product.imageUrl" alt="{{ product.name }}">
+        <div class="product-info">
+          <p class="product-name">{{ product.name }}</p>
+          <!-- Display price in Philippine Peso -->
+          <p class="product-price">{{ product.price | currency:'PHP' }}</p>
+          <div class="product-description">{{ product.description }}</div>
+
+          <!-- Quantity Selector -->
+          <div class="quantity-selector">
+            <label for="quantity-{{ product.id }}">Quantity:</label>
+            <input id="quantity-{{ product.id }}" type="number" [(ngModel)]="product.selectedQuantity"
+              [max]="product.maxQuantity" min="1" />
+          </div>
+
+          <!-- Add to Cart Button -->
+          <button (click)="addToCart(product)" class="add-to-cart-button">Add to Cart</button>
+
+          <!-- Order Button -->
+          <button (click)="orderProduct(product)" class="order-button">Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cart Modal -->
+<div *ngIf="isCartVisible" class="cart-modal">
+  <div class="cart-modal-content">
+    <span class="close" (click)="closeCart()">&times;</span>
+    <h2>Your Cart</h2>
+
+    <div *ngIf="cartItems.length === 0">
+      <p>Your cart is empty.</p>
+    </div>
+
+    <!-- Display cart items with quantity selector -->
+    <div *ngFor="let item of cartItems" class="cart-item">
+      <img class="cart-item-image" [src]="item.imageUrl" alt="{{ item.name }}">
+      <div class="cart-item-details">
+        <p>{{ item.name }}</p>
+        <p>Price: {{ item.price | currency:'PHP' }}</p>
+        <div class="quantity-selector">
+          <label for="quantity-{{ item.id }}">Quantity:</label>
+          <input id="quantity-{{ item.id }}" type="number" [(ngModel)]="item.selectedQuantity" [max]="item.maxQuantity"
+            min="1" />
+        </div>
+        <button (click)="removeFromCart(item)" class="remove-button">Remove</button>
+        <div *ngIf="cartItems.length > 0">
+          <p>Total Price: {{ totalPrice | currency:'PHP' }}</p>
+          <button (click)="checkout(item)" class="checkout-button">Checkout</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
