@@ -3,7 +3,7 @@
   <div class="navbar-content">
     <div class="navbar-item navbar-title">Product Store</div>
     <div class="navbar-item">
-      <button type="button" (click)="viewCart()" class="cart-button">
+      <button type="button" routerLink="/cart" class="cart-button">
         <i class="fas fa-shopping-cart"></i> Shopping Cart ({{ cartCount }})
       </button>
       <button type="button" (click)="logout()" class="logout-button">Logout</button>

@@ -13,6 +13,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatDialogModule } from '@angular/material/dialog';
 import { AngularCropperjsModule } from 'angular-cropperjs'; // Import CropperModule
 import { ProductComponent } from './product/product.component';
+import { CartComponent } from './cart/cart.component';
 
 
 
@@ -22,8 +23,8 @@ import { ProductComponent } from './product/product.component';
   declarations: [
     AppComponent,
     GalleryComponent,
-    ProductComponent
-    
+    ProductComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

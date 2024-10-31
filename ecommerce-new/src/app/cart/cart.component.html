@@ -1,0 +1,29 @@
+<div class="cart-modal">
+  <div class="cart-modal-content">
+    <span class="close" (click)="closeCart()">&times;</span>
+    <h2>Your Cart</h2>
+
+    <div *ngIf="cartItems.length === 0">
+      <p>Your cart is empty.</p>
+    </div>
+
+    <!-- Display cart items with quantity selector -->
+    <div *ngFor="let item of cartItems" class="cart-item">
+      <img class="cart-item-image" [src]="item.imageUrl" alt="{{ item.name }}">
+      <div class="cart-item-details">
+        <p>{{ item.name }}</p>
+        <p>Price: {{ item.price | currency:'PHP' }}</p>
+        <div class="quantity-selector">
+          <label for="quantity-{{ item.id }}">Quantity:</label>
+          <input id="quantity-{{ item.id }}" type="number" [(ngModel)]="item.selectedQuantity" [max]="item.maxQuantity"
+            min="1" />
+        </div>
+        <button (click)="removeFromCart(item)" class="remove-button">Remove</button>
+        <div *ngIf="cartItems.length > 0">
+          <p>Total Price: {{ totalPrice | currency:'PHP' }}</p>
+          <button (click)="checkout(item)" class="checkout-button">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
